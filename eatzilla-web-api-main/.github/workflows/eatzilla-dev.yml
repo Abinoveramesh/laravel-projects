@@ -1,0 +1,38 @@
+name: eatzilla-new-dev
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy to server
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_PRIVATEKEY }}
+          script: | 
+           cd /var/www/html/eatzilla-new/eatzilla-web-api
+           git pull origin main
+           cd /var/www/html/eatzilla-new/eatzilla-web-api/8dsny8n87t78
+           composer install
+           sudo chmod -R 777 storage/ bootstrap/
+           #php artisan config:cache
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+            curl -X POST -H "Content-Type: application/json" -d '{"text":"GitHub Action Deployment failed for branch ${{ github.ref }} in repository ${{ github.repository }}"}' "https://cliq.zoho.com/company/654406765/api/v2/channelsbyname/eatzillaproduct/message?zapikey=${{ secrets.CLIQ_API_KEY }}"
+   
+      - name: Notify on success
+        if: success()
+        run: |
+            curl -X POST -H "Content-Type: application/json" -d '{"text":"GitHub Action Deployemnt passed for branch ${{ github.ref }} in repository ${{ github.repository }}"}' "https://cliq.zoho.com/company/654406765/api/v2/channelsbyname/eatzillaproduct/message?zapikey=${{ secrets.CLIQ_API_KEY }}"    

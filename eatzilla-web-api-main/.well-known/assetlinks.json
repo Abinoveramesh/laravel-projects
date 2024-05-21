@@ -1,0 +1,5 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "android_app", "package_name": "com.truely.user",
+               "sha256_cert_fingerprints": ["02:67:7F:EC:AE:FD:5F:64:F6:EC:FE:59:A9:1A:D9:5E:01:9C:5D:5B:CE:30:C4:E7:EF:C1:D0:C3:7A:3E:F3:9F"] }
+}]
