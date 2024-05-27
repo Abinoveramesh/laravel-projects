@@ -65,7 +65,7 @@ class AppServiceProvider extends ServiceProvider
 
                 define('FIREBASE_URL', (isset($setting_value['firebase_url']) ?  $setting_value['firebase_url'] : 'https://joldiasho-10cd9.firebaseio.com'));
 
-                define('GOOGLE_API_KEY', (isset($setting_value['google_api_key']) ?  $setting_value['google_api_key'] : 'AIzaSyDy3904vbrXHNDK91N9rz7W5WN1kZZLCaQ'));
+                define('GOOGLE_API_KEY', (isset($setting_value['google_api_key']) ?  $setting_value['google_api_key'] : ''));
 
                 define('ANDROID_API_KEY', (isset($setting_value['android_api_key']) ?  $setting_value['android_api_key'] : 'AIzaSyAVrnjmTHuHu4PMz6Ygsz9L1wL3jlzBEi4'));
 
